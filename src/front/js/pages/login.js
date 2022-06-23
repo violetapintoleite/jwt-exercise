@@ -18,7 +18,7 @@ export const Login = () => {
 			"password": password
 		})
 	}
-	fetch('https://3000-violetapint-jwtexercise-z266d0sq1oq.ws-eu47.gitpod.io/token', opts)
+	fetch('https://3001-violetapint-jwtexercise-z266d0sq1oq.ws-eu47.gitpod.io/api/token', opts)
 	.then(resp => {
 		if(resp.status === 200) return resp.json();
 		else(alert("There has been some error"))
