@@ -8,7 +8,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <Link to="/">
-          <span className="navbar-brand mb-0 h1">React Boilerplate</span>
+          <span className="navbar-brand mb-0 h1">JWT Exercise</span>
         </Link>
         <div className="ml-auto">
           {!store.token ? (
@@ -16,12 +16,14 @@ export const Navbar = () => {
               <button className="btn btn-primary">Login</button>
             </Link>
           ) : (
-            <button
-              onClick={() => actions.logout()}
-              className="btn btn-primary"
-            >
-              Logout
-            </button>
+            <Link to="/">
+              <button
+                onClick={() => actions.logout()}
+                className="btn btn-primary"
+              >
+                Logout
+              </button>
+            </Link>
           )}
         </div>
       </div>
