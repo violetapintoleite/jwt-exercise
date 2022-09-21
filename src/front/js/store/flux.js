@@ -18,8 +18,43 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
+      createNewUser: async (email, password) => {
+        const opts = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        };
+
+        try {
+          const resp = await fetch(
+            "https://3001-violetapint-jwtexercise-eh9fwkhhn03.ws-eu64.gitpod.io" +
+              "/api/signup",
+
+            opts
+          );
+
+          if (resp.status !== 201) {
+            alert("error before initial 201 request");
+            return false;
+          }
+          const data = await resp.json();
+          console.log("this came from the backend", data);
+          // need to set up local storage function
+          localStorage.setItem("token", data.access_token);
+
+          setStore({
+            token: data.access_token,
+            email: email,
+          });
+
+          return true;
+        } catch (error) {
+          console.log("there's an error creating the account");
+          alert("email or username already exists");
+        }
       },
 
       syncTokenFromSessionStore: () => {
@@ -50,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const resp = await fetch(
-            "https://3001-violetapint-jwtexercise-8bte8lho0wc.ws-eu47.gitpod.io/api/token",
+            "https://3001-violetapint-jwtexercise-eh9fwkhhn03.ws-eu64.gitpod.io/api/token",
             opts
           );
           if (resp.status !== 200) {

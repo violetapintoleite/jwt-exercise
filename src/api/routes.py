@@ -15,6 +15,30 @@ api = Blueprint('api', __name__)
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
+# sign up end point
+@api.route("/signup", methods=["POST"])
+def createNewUser():
+    request_body = request.get_json(force=True)
+    email = request_body['email']
+    password = request_body['password']
+    is_active = True
+
+    try:
+        user = User(email=email, password=password, is_active=is_active)
+    except exc.SQLAlchemyError: 
+        return jsonify("error creating the user"), 400
+    try:
+        db.session.add(user)
+    except exc.SQLAlchemyError: 
+        return jsonify("error adding the user"), 400
+    db.session.commit()
+    access_token = create_access_token(identity=email)
+
+    return jsonify({"msg": "sign up complete", "access_token" : access_token}), 201
+
+
+    return jsonify({"msg": "error signing up"}), 401
+
 @api.route("/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)

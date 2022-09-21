@@ -12,7 +12,7 @@ export const Signup = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    actions.login(email, password);
+    actions.createNewUser(email, password);
   };
 
   if (store.token && store.token != "" && store.token != undefined)
