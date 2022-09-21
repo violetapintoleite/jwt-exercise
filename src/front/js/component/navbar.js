@@ -12,9 +12,14 @@ export const Navbar = () => {
         </Link>
         <div className="ml-auto">
           {!store.token ? (
-            <Link to="/login">
-              <button className="btn btn-primary">Login</button>
-            </Link>
+            <>
+              <Link to="/login">
+                <button className="btn btn-primary">Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className="btn btn-primary m-2">Signup</button>
+              </Link>
+            </>
           ) : (
             <Link to="/">
               <button
